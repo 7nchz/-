@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<hmtl lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Курсовая работа</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="test.js">
+        <style >
+            html { overflow-x: hidden; }
+            </style>
+    </head>
+    <script type="text/javascript">
+        var lastResFind=""; // последний удачный результат
+        var copy_page=""; // копия страницы в ихсодном виде
+        function TrimStr(s) {
+             s = s.replace( /^\s+/g, '');
+          return s.replace( /\s+$/g, '');
+        }
+        function FindOnPage(inputId) {//ищет текст на странице, в параметр передается ID поля для ввода
+          var obj = window.document.getElementById(inputId);
+          var textToFind;
+         
+          if (obj) {
+            textToFind = TrimStr(obj.value);//обрезаем пробелы
+          } else {
+            alert("Введенная фраза не найдена");
+            return;
+          }
+          if (textToFind == "") {
+            alert("Вы ничего не ввели");
+            return;
+          }
+         
+          if(document.body.innerHTML.indexOf(textToFind)=="-1")
+          alert("Ничего не найдено, проверьте правильность ввода!");
+         
+          if(copy_page.length>0)
+                document.body.innerHTML=copy_page;
+          else copy_page=document.body.innerHTML;
+        
+         
+          document.body.innerHTML = document.body.innerHTML.replace(eval("/name="+lastResFind+"/gi")," ");//стираем предыдущие якори для скрола
+          document.body.innerHTML = document.body.innerHTML.replace(eval("/"+textToFind+"/gi"),"<a name="+textToFind+" style='background:red'>"+textToFind+"</a>"); //Заменяем найденный текст ссылками с якорем;
+          lastResFind=textToFind; // сохраняем фразу для поиска, чтобы в дальнейшем по ней стереть все ссылки
+          window.location = '#'+textToFind;//перемещаем скрол к последнему найденному совпадению
+         }
+        </script>
+<body>
+    <div id="rectangle"></div>
+
+    
+   <p class="zagalovok">Курсовая работа</p>
+
+   <div class="container">
+    <h2>JavaScript поиск по странице</h2>
+<input type="text" id="text-to-find" value="">
+<input type="button" onclick="javascript: FindOnPage('text-to-find'); return false;" value="Искать"/>
+<br/><i>Введите слово или фразу для поиска.</i>
+<hr/>
+
+<table border='2' cellpadding='20'>
+ <tr><th>Название курса</th><th>шифр курса</th><th>Группа</th><th>Количество часов</th><th>Сперанский Виктор Александрович</th><th>Фио ассистента</th></tr>
+ <tr><th>Современные технологии программирования</th><th>C211-C212</th><th>АТ 211-АТ 212</th><th>51</th><th>Сперанский Виктор Александрович</th><th>Фио ассистента</th></tr>
+ <tr><th>Современные интернет-технологии</th><th>WEB211 / WEB212</th><th>АТ 211-Ат 212</th><th>22</th><th>Сперанский Виктор Александрович</th><th>Ілуца А.С.__</th></tr>
+ <tr><th>Пакеты прикладных программ</th><th>P211 / P212</th><th>АТ 211-АТ 212</th><th>17</th><th>Фомин Александр Алексеевич</th><th>Фио ассистента</th></tr>
+ <tr><th>Программирование и теория алгоритмов - 1 семестр</th><th>С211/С212</th><th>АТ 211-АТ 212</th><th>75</th><th>Сперанский Виктор Александрович</th><th>Фио ассистента</th></tr>
+</table>
+    </body>
